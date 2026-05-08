@@ -4,6 +4,17 @@ All notable changes to TunnelRAT will be documented here.
 
 ---
 
+## [0.1.1] — 2026-05-07 — Bug Fix Release
+
+### Fixed
+- **Empty username crash** — Sessions created without a username field populated
+  would produce `@hostname` as the SSH destination (invalid argument), causing
+  `ssh` to print its usage message instead of connecting. `_build_ssh_cmd` now
+  falls back to `getpass.getuser()` (current OS user) when username is blank,
+  matching the behavior of plain `ssh hostname` in a terminal.
+
+---
+
 ## [0.1.0] — 2026-04-27 — Initial Release
 
 ### 🐀 First public release

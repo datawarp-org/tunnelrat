@@ -704,7 +704,13 @@ class SSHBridge(QObject):
         if session.extra_args:
             cmd += shlex.split(session.extra_args)
 
-        cmd.append(f"{session.username}@{session.host}")
+        # Build destination — if no username specified use current user
+        if session.username:
+            destination = f"{session.username}@{session.host}"
+        else:
+            import getpass
+            destination = f"{getpass.getuser()}@{session.host}"
+        cmd.append(destination)
         return cmd
 
     # ── PTY resize ────────────────────────────────────────────────────────────
